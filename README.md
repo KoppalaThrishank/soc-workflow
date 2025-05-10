@@ -133,9 +133,13 @@ In MySQL:
 
 sql
 CREATE DATABASE osticket_db;
+
 CREATE USER 'osticket_user'@'localhost' IDENTIFIED BY 'YourPassword123!';
+
 GRANT ALL PRIVILEGES ON osticket_db.* TO 'osticket_user'@'localhost';
+
 FLUSH PRIVILEGES;
+
 EXIT;
 
 
@@ -246,6 +250,7 @@ output {
 ### 3.2. 🔍 Monitor and Detect Malicious Activity
 
 * Once malicious activity is detected via **Kibana** (e.g., unusual behavior, command execution), **Kibana** will trigger an alert.
+![Uploading image.png…]()
 
 ### 3.3. 📝 Create Incident Ticket
 
