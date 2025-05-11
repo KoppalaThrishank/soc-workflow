@@ -1,3 +1,6 @@
+
+
+
 # soc-workflow
 # 🔐 Cybersecurity Lab: Mythic C2 + ELK Stack + osTicket
 
@@ -190,53 +193,57 @@ print(response.status_code, response.text)
 ### 1.1. ⚙️ Setup Mythic C2
 - Install **Docker**, **Mythic**, and necessary dependencies.
 - Start **Mythic C2** using Docker.
-- Access Mythic at `http://localhost:7443`.
+- Access Mythic at `http://localhost:7443`.  You can find the password on .env file inside Mythic 
+ 
 
 ### 1.2. 🎯 Create Payload
 - Using **Mythic**, create a custom payload (e.g., **Apollo** for Linux or a Windows agent).
 - Configure the payload to connect back to **Mythic C2** for command-and-control operations.
+ 
 
 ### 1.3. 💻 Access Target System
-- Deploy the payload to a **Windows machine** (or other target) via **Mythic C2**.
+- Deploy the payload to a **Windows machine via Mythic C2.
 - The payload executes on the target system, establishing a reverse shell connection to Mythic.
+(That payload does establish a reverse shell connection back to the Mythic C2 server (this is how Mythic works—like any C2)
 
----
 
 ## 2. 🛡️ ELK Stack (Blue Team – Monitoring and Detection)
 
 ### 2.1. 🖥️ Install ELK Stack
 - Install **Elasticsearch**, **Logstash**, and **Kibana** on a monitoring server.
+ 
+After installation open the  sudo nano /etc/elasticsearch/elasticsearch.yml
+You need to set network host : 0.0.0.0 
 - Set up **Winlogbeat** on the target **Windows machine** to forward **Windows Event Logs** (security, application, and system logs) to the ELK Stack.
 
 ### 2.2. 📝 Configure Winlogbeat
 - Install and configure **Winlogbeat** on the target **Windows system**.
-- Configure Winlogbeat to forward logs to **Logstash** for further processing and indexing into **Elasticsearch**.
-
-```yaml
+•	- Configure Winlogbeat, Then it forwards those logs to Logstash, which sends them to Elasticsearch.
+•	You can view and analyze those logs in Kibana.
+Open in notepad Winlogbeat 
+yaml
 output.logstash:
-  hosts: ["localhost:5044"]
-````
+  hosts: ["localhost:5044"] or hosts: [ubuntu ip:5044]
+
 
 ### 2.3. 🔄 Log Processing in Logstash
 
 * **Logstash** processes incoming logs and forwards them to **Elasticsearch**.
 * In **Logstash**, set up input and output configurations to handle Windows Event logs.
-
-```plaintext
+Open logstash log file 
 input {
   beats { port => 5044 }
 }
 output {
   elasticsearch { hosts => ["localhost:9200"] }
 }
-```
 
 ### 2.4. 📊 View Logs in Kibana
 
 * Access **Kibana** at `http://localhost:5601`.
 * Configure **index patterns** (e.g., `winlogbeat-*`) to view logs from Winlogbeat.
 * Create **visualizations** and **alerts** in Kibana to monitor for suspicious activity (e.g., unexpected command executions, unusual logins).
-
+ 
 ---
 
 ## 3. 🎫 osTicket (Incident Response – Ticketing)
@@ -254,7 +261,8 @@ output {
 
 ### 3.3. 📝 Create Incident Ticket
 
-* The alert can be forwarded automatically to **osTicket** using a **Python script** or **API webhook**.
+* The alert can be forwarded automatically to **osTicket** using a **Python script 
+ 
 * Example Python script to create a ticket in osTicket based on a Kibana alert:
 
 ```python
@@ -275,10 +283,9 @@ print(response.status_code, response.text)
 ### 3.4. ✅ Incident Ticket Created in osTicket
 
 * The ticket is created with details like the name of the alert, the type of activity, and a link to **Kibana logs**.
+ 
 * This ticket will be visible in **osTicket's** dashboard for SOC analysts to review, investigate, and take further action.
-
----
-
+ 
 ## 🔄 Flow of Events
 
 1. **Red Team (Mythic C2)** initiates an attack by deploying a payload.
@@ -287,15 +294,6 @@ print(response.status_code, response.text)
 4. **osTicket** is automatically triggered to create an incident ticket detailing the suspicious activity.
 5. The **SOC team** reviews the ticket in **osTicket**, investigates the issue, and takes action based on the analysis.
 
----
-
-## 📜 Summary of Workflow
-
-* **Mythic C2**: Create and deploy payloads (red team simulation).
-* **ELK Stack**: Monitor and detect activity through logs (blue team detection).
-* **osTicket**: Manage incidents and track response (SOC ticketing).
-
----
 
 ## 🔮 Future Enhancements
 
