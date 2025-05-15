@@ -1,9 +1,4 @@
-Here is your GitHub `README.md` content formatted cleanly and professionally for direct copy-paste into your repo:
-
----
-
-````markdown
-# 🔐 Cybersecurity Lab: Mythic C2 + ELK Stack + osTicket
+ 🔐 **Cybersecurity Lab Project: Integrating Mythic C2, ELK Stack & osTicket**
 
 This project demonstrates a complete SOC simulation environment integrating:
 
@@ -11,28 +6,21 @@ This project demonstrates a complete SOC simulation environment integrating:
 - 📊 **ELK Stack** – for Blue Team log monitoring and threat detection  
 - 🎫 **osTicket** – for incident management and SOC ticketing  
 
----
-
-## 📌 Project Goals
+ 📌 Project Goals
 
 - Simulate real-world cyberattacks using Mythic C2 (e.g., reverse shells, beaconing).  
 - Detect malicious activities using ELK Stack (Elasticsearch, Logstash, Kibana).  
 - Manage and track incidents using osTicket (SOC workflow simulation).  
 
----
-
-## 🖥️ Lab Environment
+ 🖥️ Lab Environment
 
 - **OS**: Ubuntu 22.04 LTS  
 - **Deployment**: Virtual Machine / Cloud (AWS, Azure, DigitalOcean)  
 
----
+ 🔴 1. Mythic C2 (Red Team – Attack Simulation)
 
-## 🔴 1. Mythic C2 (Red Team – Attack Simulation)
+ ⚙️ Setup Mythic C2
 
-### ⚙️ Setup Mythic C2
-
-```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install docker.io docker-compose git -y
 sudo systemctl enable --now docker
@@ -40,7 +28,7 @@ git clone https://github.com/its-a-feature/Mythic
 cd Mythic
 sudo ./install_docker_ubuntu.sh
 sudo docker-compose up -d
-````
+
 
 * Access Mythic: `http://localhost:7443`
 * Default credentials: `mythic_admin / password` (or check `.env` file)
@@ -52,18 +40,18 @@ sudo docker exec -it mythic_server bash
 ./mythic-cli install github https://github.com/MythicAgents/apollo  
 exit  
 sudo docker restart mythic_server
-```
+
 
 * Access the Mythic panel from a Windows browser using Ubuntu’s IP.
 * Download and execute the payload to simulate a reverse shell.
 
----
+
 
 ## 🔵 2. ELK Stack (Log Monitoring)
 
 ### 📥 Install Java & ELK Stack
 
-```bash
+
 sudo apt install openjdk-17-jdk -y
 
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elastic.gpg
@@ -75,14 +63,12 @@ sudo apt install elasticsearch logstash kibana -y
 sudo systemctl enable --now elasticsearch kibana logstash
 ```
 
-### ⚙️ Logstash Config
+ ⚙️ Logstash Config
 
-```bash
+
 sudo nano /etc/logstash/conf.d/logstash.conf
-```
 
-Paste:
-
+paste this on config file 
 ```conf
 input {
   file {
@@ -100,9 +86,7 @@ output {
 
 Restart Logstash:
 
-```bash
 sudo systemctl restart logstash
-```
 
 * Access Kibana: `http://localhost:5601`
 
@@ -112,48 +96,43 @@ sudo systemctl restart logstash
 
 ### 🛠️ Install LAMP Stack
 
-```bash
+
 sudo apt install apache2 mariadb-server php php-mysql php-curl php-gd php-mbstring php-xml php-zip unzip -y
 sudo mysql_secure_installation
-```
+
 
 ### 📦 Download & Configure osTicket
 
-```bash
+
 wget https://github.com/osTicket/osTicket/releases/download/v1.18/osTicket-v1.18.zip
 unzip osTicket-v1.18.zip
 sudo mv upload /var/www/html/osticket
 sudo chown -R www-data:www-data /var/www/html/osticket
-```
+
 
 ### 🗃️ Create Database
 
-```bash
+
 sudo mysql -u root -p
-```
 
-Inside MySQL:
+ Add this Inside the  MySQL:
 
-```sql
 CREATE DATABASE osticket_db;
 CREATE USER 'osticket_user'@'localhost' IDENTIFIED BY 'YourPassword123!';
 GRANT ALL PRIVILEGES ON osticket_db.* TO 'osticket_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
-```
 
 * Open browser: `http://localhost/osticket/setup`
 * Complete setup, then:
 
-```bash
+
 sudo rm -rf /var/www/html/osticket/setup
-```
 
----
 
-## 🔄 ELK ➝ osTicket Alerts (Python Script Example)
+## 🔄 ELK ➝ osTicket Alerts (Python Script)
 
-```python
+ script python
 import requests
 
 url = "http://localhost/osticket/api/tickets.json"
@@ -169,9 +148,7 @@ data = {
 
 response = requests.post(url, json=data, headers=headers)
 print(response.status_code, response.text)
-```
 
----
 
 # 🔐 Cybersecurity Workflow Overview
 
@@ -219,7 +196,7 @@ output {
 * Setup osTicket with database
 * Kibana triggers Python script to create alert-based ticket in osTicket
 
----
+![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/afe24227f015f84885f45e5d3c19a3fd93f13dc2/Picture1.png)
 
 ## 🔄 Workflow
 
