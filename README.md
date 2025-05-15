@@ -232,7 +232,7 @@ output {
 Enter the credentiels who do you assign the ticket or team 
 
 * The alert can be forwarded automatically to **osTicket** using a **Python script
- ![image alt](
+ ![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/d2ca0cf3d2cb03eb5b28ab0f26c7fd6035121ee9/Picture8.png)
  
 * Example Python script to create a ticket in osTicket based on a Kibana alert:
 
