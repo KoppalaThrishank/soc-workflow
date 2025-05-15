@@ -178,6 +178,7 @@ print(response.status_code, response.text)
 
 ### 2.1. 🖥️ Install ELK Stack
 - Install **Elasticsearch**, **Logstash**, and **Kibana** on a monitoring server.
+ ![image alt]( https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture3.png)
  
 After installation open the  sudo nano /etc/elasticsearch/elasticsearch.yml
 You need to set network host : 0.0.0.0 
@@ -209,6 +210,7 @@ output {
 
 * Access **Kibana** at `http://localhost:5601`.
 * Configure **index patterns** (e.g., `winlogbeat-*`) to view logs from Winlogbeat.
+![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture4.png)
 * Create **visualizations** and **alerts** in Kibana to monitor for suspicious activity (e.g., unexpected command executions, unusual logins).
  
 
@@ -228,11 +230,12 @@ output {
 
 ### 3.3. 📝 Create Incident Ticket
 
-* The alert can be forwarded automatically to **osTicket** using a **Python script 
+* The alert can be forwarded automatically to **osTicket** using a **Python script
+ ![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture5.png)
  
 * Example Python script to create a ticket in osTicket based on a Kibana alert:
 
-```python
+ script python
 import requests
 
 url = "http://localhost/osticket/api/tickets.json"
@@ -245,9 +248,12 @@ data = {
 
 response = requests.post(url, json=data, headers={"X-API-Key": "your_api_key_here"})
 print(response.status_code, response.text)
-```
+
+
+![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture6.png)
 
 ### 3.4. ✅ Incident Ticket Created in osTicket
+![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture7.png)
 
 * The ticket is created with details like the name of the alert, the type of activity, and a link to **Kibana logs**.
  
