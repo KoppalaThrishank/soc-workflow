@@ -229,9 +229,10 @@ output {
 ![Uploading image.png…]()
 
 ### 3.3. 📝 Create Incident Ticket
+Enter the credentiels who do you assign the ticket or team 
 
 * The alert can be forwarded automatically to **osTicket** using a **Python script
- ![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/1a4e684bdb983ebc4126db277a525e11b1e9e6cc/Picture5.png)
+ ![image alt](
  
 * Example Python script to create a ticket in osTicket based on a Kibana alert:
 
