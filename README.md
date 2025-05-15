@@ -197,6 +197,7 @@ output {
 * Kibana triggers Python script to create alert-based ticket in osTicket
 
 ![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/afe24227f015f84885f45e5d3c19a3fd93f13dc2/Picture1.png)
+  ![image alt](https://github.com/KoppalaThrishank/soc-workflow/blob/b7881a0658b5a9f4d96461d770fca7361a9d8178/Picture2.png)
 
 ## 🔄 Workflow
 
